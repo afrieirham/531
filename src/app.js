@@ -6,11 +6,11 @@ const STORAGE = { labels: "531.labels", tms: "531.tms" };
 function load(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
-    if (raw === null) return fallback;
+    if (raw === null) return [...fallback];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : fallback;
+    return Array.isArray(parsed) ? parsed : [...fallback];
   } catch {
-    return fallback;
+    return [...fallback];
   }
 }
 
@@ -28,19 +28,19 @@ const tms = load(STORAGE.tms, ["", "", "", ""]);
 const template = document.getElementById("card-template");
 const container = document.getElementById("cards");
 
-function formatWeight(weight) {
-  return String(weight);
+function percentAndReps(set) {
+  const reps = set.amrap ? `${set.reps}+` : String(set.reps);
+  return `${set.pct}% &times; ${reps}`;
 }
 
 function setCell(set) {
-  const reps = set.amrap ? `${set.reps}+` : String(set.reps);
   return `
-    <span class="weight">${formatWeight(set.weight)}<span class="unit">kg</span></span>
-    <span class="meta">${set.pct}% &times; ${reps}</span>`;
+    <span class="weight">${String(set.weight)}<span class="unit">kg</span></span>
+    <span class="meta">${percentAndReps(set)}</span>`;
 }
 
 function warmupChip(set) {
-  return `<span class="chip"><b>${formatWeight(set.weight)} kg</b> <small>${set.pct}% &times; ${set.reps}</small></span>`;
+  return `<span class="chip"><b>${String(set.weight)} kg</b> <small>${percentAndReps(set)}</small></span>`;
 }
 
 function renderResults(cycle) {

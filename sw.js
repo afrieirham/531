@@ -34,6 +34,7 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
+  const isNavigation = event.request.mode === "navigate";
   event.respondWith(
     caches.match(event.request).then(
       (cached) =>
@@ -44,7 +45,9 @@ self.addEventListener("fetch", (event) => {
             caches.open(CACHE).then((cache) => cache.put(event.request, copy));
             return response;
           })
-          .catch(() => caches.match("./index.html")),
+          .catch(() =>
+            isNavigation ? caches.match("./index.html") : Response.error(),
+          ),
     ),
   );
 });

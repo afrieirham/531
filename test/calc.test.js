@@ -4,11 +4,10 @@ import { buildCycle } from "../src/calc.js";
 
 test("builds the four-week cycle for a training max of 100 kg", () => {
   assert.deepEqual(buildCycle(100), {
-    trainingMax: 100,
     warmup: [
-      { pct: 40, reps: 5, weight: 40 },
-      { pct: 50, reps: 5, weight: 50 },
-      { pct: 60, reps: 3, weight: 60 },
+      { pct: 40, reps: 5, amrap: false, weight: 40 },
+      { pct: 50, reps: 5, amrap: false, weight: 50 },
+      { pct: 60, reps: 3, amrap: false, weight: 60 },
     ],
     weeks: [
       {
