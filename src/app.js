@@ -72,8 +72,22 @@ function setCell(set) {
     <span class="meta">${percentAndReps(set)}</span>${amrapTag(set)}`;
 }
 
-function warmupChip(set) {
-  return `<span class="chip"><b>${String(set.weight)} kg</b> <small>${percentAndReps(set)}</small></span>`;
+function warmupSet(set) {
+  return `
+    <li class="now-set">
+      <span class="weight">${String(set.weight)}<span class="unit">kg</span></span>
+      <span class="meta">${percentAndReps(set)}</span>
+    </li>`;
+}
+
+function warmupBlock(cycle) {
+  return `
+    <div class="warmup">
+      <div class="now-head">
+        <span class="now-week">Warm-up</span>
+      </div>
+      <ul class="now-sets">${cycle.warmup.map(warmupSet).join("")}</ul>
+    </div>`;
 }
 
 function nowBlock(cycle, weekIndex) {
@@ -100,7 +114,6 @@ function nowBlock(cycle, weekIndex) {
 }
 
 function allWeeks(cycle, weekIndex) {
-  const warmup = cycle.warmup.map(warmupChip).join("");
   const rows = cycle.weeks
     .map(
       (week, index) => `
@@ -113,11 +126,7 @@ function allWeeks(cycle, weekIndex) {
 
   return `
     <details class="all-weeks">
-      <summary>All weeks &amp; warm-up</summary>
-      <div class="warmup">
-        <span class="warmup-title">Warm-up</span>
-        <div class="chips">${warmup}</div>
-      </div>
+      <summary>All weeks</summary>
       <table class="grid">
         <thead>
           <tr><th></th><th>Set 1</th><th>Set 2</th><th>Set 3</th></tr>
@@ -133,6 +142,7 @@ function renderResults(cycle, weekIndex) {
       <span class="tm-line-label">TM</span>
       <b>${String(cycle.trainingMax)} kg</b>
     </div>
+    ${warmupBlock(cycle)}
     ${nowBlock(cycle, weekIndex)}
     ${allWeeks(cycle, weekIndex)}`;
 }

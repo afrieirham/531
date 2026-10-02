@@ -278,16 +278,28 @@ body {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.5rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.4rem;
 }
 
 .now-set {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 0.6rem 0.65rem;
+  padding: 0.6rem 0.75rem;
   font-variant-numeric: tabular-nums;
+}
+
+.now-set .meta {
+  margin-left: auto;
+}
+
+.now-set .amrap-tag {
+  margin-top: 0;
 }
 
 .now-set.is-amrap {
@@ -296,6 +308,7 @@ body {
 
 .now-set .weight {
   font-size: 1.15rem;
+  margin: 0;
 }
 
 .amrap-tag {
@@ -364,36 +377,7 @@ body {
 }
 
 .warmup {
-  margin: 0.6rem 0 0.85rem;
-}
-
-.warmup-title {
-  display: block;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  margin-bottom: 0.35rem;
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.chip {
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 0.3rem 0.5rem;
-  font-size: 0.85rem;
-  font-variant-numeric: tabular-nums;
-}
-
-.chip small {
-  color: var(--muted);
-  margin-left: 0.15rem;
+  margin-bottom: 0.9rem;
 }
 
 .grid {
