@@ -2,8 +2,10 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { buildCycle } from "../src/calc.js";
 
-test("builds the four-week cycle for a training max of 100 kg", () => {
-  assert.deepEqual(buildCycle(100), {
+test("builds the four-week cycle for a training max equal to the 1RM", () => {
+  assert.deepEqual(buildCycle(100, 100), {
+    tmPercent: 100,
+    trainingMax: 100,
     warmup: [
       { pct: 40, reps: 5, amrap: false, weight: 40 },
       { pct: 50, reps: 5, amrap: false, weight: 50 },
@@ -46,25 +48,43 @@ test("builds the four-week cycle for a training max of 100 kg", () => {
   });
 });
 
-test("rounds every set to the nearest 2.5 kg", () => {
-  const cycle = buildCycle(87);
+test("defaults to a training max of 90% of the 1RM", () => {
+  const withDefault = buildCycle(100);
+  assert.equal(withDefault.tmPercent, 90);
+  assert.equal(withDefault.trainingMax, 90);
+});
+
+test("derives weights straight from the 1RM and chosen percentage", () => {
+  const cycle = buildCycle(87, 90);
+  assert.equal(cycle.trainingMax, 77.5);
   assert.deepEqual(
     cycle.warmup.map((set) => set.weight),
-    [35, 42.5, 52.5],
+    [32.5, 40, 47.5],
   );
   assert.deepEqual(
     cycle.weeks.map((week) => week.sets.map((set) => set.weight)),
     [
-      [57.5, 65, 75],
-      [60, 70, 77.5],
-      [65, 75, 82.5],
-      [35, 42.5, 52.5],
+      [50, 57.5, 67.5],
+      [55, 62.5, 70],
+      [57.5, 67.5, 75],
+      [32.5, 40, 47.5],
     ],
   );
 });
 
-test("returns no cycle for a missing or non-positive training max", () => {
+test("an 85% training max yields lighter weights", () => {
+  const cycle = buildCycle(100, 85);
+  assert.equal(cycle.trainingMax, 85);
+  assert.deepEqual(
+    cycle.weeks[0].sets.map((set) => set.weight),
+    [55, 65, 72.5],
+  );
+});
+
+test("returns no cycle for a missing or non-positive input", () => {
   for (const value of [0, -10, NaN, undefined, "", null]) {
-    assert.equal(buildCycle(value), null);
+    assert.equal(buildCycle(value, 90), null);
   }
+  assert.equal(buildCycle(100, 0), null);
+  assert.equal(buildCycle(100, -5), null);
 });

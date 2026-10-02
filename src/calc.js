@@ -1,4 +1,5 @@
 const INCREMENT_KG = 2.5;
+const DEFAULT_TM_PERCENT = 90;
 
 const WARMUP = [
   { pct: 40, reps: 5, amrap: false },
@@ -41,9 +42,8 @@ const WEEKS = [
   },
 ];
 
-function toWeight(trainingMax, pct) {
-  const raw = (trainingMax * pct) / 100;
-  return Math.round(Math.round(raw / INCREMENT_KG) * INCREMENT_KG * 100) / 100;
+function roundToIncrement(value) {
+  return Math.round(Math.round(value / INCREMENT_KG) * INCREMENT_KG * 100) / 100;
 }
 
 function withWeight(trainingMax) {
@@ -51,16 +51,22 @@ function withWeight(trainingMax) {
     pct: set.pct,
     reps: set.reps,
     amrap: set.amrap,
-    weight: toWeight(trainingMax, set.pct),
+    weight: roundToIncrement((trainingMax * set.pct) / 100),
   });
 }
 
-export function buildCycle(trainingMax) {
-  const tm = Number(trainingMax);
-  if (!Number.isFinite(tm) || tm <= 0) return null;
+export function buildCycle(oneRepMax, tmPercent = DEFAULT_TM_PERCENT) {
+  const max = Number(oneRepMax);
+  const percent = Number(tmPercent);
+  if (!Number.isFinite(max) || max <= 0) return null;
+  if (!Number.isFinite(percent) || percent <= 0) return null;
 
-  const weigh = withWeight(tm);
+  const trainingMax = (max * percent) / 100;
+  const weigh = withWeight(trainingMax);
+
   return {
+    tmPercent: percent,
+    trainingMax: roundToIncrement(trainingMax),
     warmup: WARMUP.map(weigh),
     weeks: WEEKS.map((week) => ({
       name: week.name,

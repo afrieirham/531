@@ -39,8 +39,8 @@ body {
 }
 
 .app-header {
-  max-width: 1100px;
-  margin: 0 auto 1.25rem;
+  max-width: 1400px;
+  margin: 0 auto 0.9rem;
 }
 
 .app-header h1 {
@@ -55,13 +55,75 @@ body {
   font-size: 0.95rem;
 }
 
+.settings {
+  max-width: 1400px;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.settings-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-right: 0.35rem;
+}
+
+.segment {
+  position: relative;
+  display: inline-flex;
+}
+
+.segment input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.segment span {
+  display: inline-block;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.segment input:checked + span {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.segment input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .cards {
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto;
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  grid-template-columns: 1fr;
   align-items: start;
+}
+
+@media (min-width: 640px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .card {
@@ -86,8 +148,8 @@ body {
   min-width: 0;
 }
 
-.field-tm {
-  flex: 0 0 8.5rem;
+.field-1rm {
+  flex: 0 0 7.5rem;
 }
 
 .field-label {
@@ -117,6 +179,30 @@ body {
   margin-top: 1rem;
   border-top: 1px solid var(--border);
   padding-top: 0.9rem;
+}
+
+.tm-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.tm-line-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.tm-line b {
+  font-size: 0.95rem;
+}
+
+.tm-line-pct {
+  font-size: 0.75rem;
+  color: var(--muted);
 }
 
 .warmup {

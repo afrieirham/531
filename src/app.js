@@ -1,16 +1,23 @@
 import { buildCycle } from "./calc.js";
 
 const DEFAULT_LABELS = ["Bench Press", "Squat", "Deadlift", "Overhead Press"];
-const STORAGE = { labels: "531.labels", tms: "531.tms" };
+const DEFAULT_TM_PERCENT = 90;
+const STORAGE = {
+  labels: "531.labels",
+  oneRepMaxes: "531.oneRepMaxes",
+  tmPercent: "531.tmPercent",
+};
 
 function load(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
-    if (raw === null) return [...fallback];
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [...fallback];
+    const parsed = raw === null ? undefined : JSON.parse(raw);
+    if (Array.isArray(fallback)) {
+      return Array.isArray(parsed) ? parsed : [...fallback];
+    }
+    return parsed ?? fallback;
   } catch {
-    return [...fallback];
+    return Array.isArray(fallback) ? [...fallback] : fallback;
   }
 }
 
@@ -23,10 +30,15 @@ function save(key, value) {
 }
 
 const labels = load(STORAGE.labels, DEFAULT_LABELS);
-const tms = load(STORAGE.tms, ["", "", "", ""]);
+const oneRepMaxes = load(STORAGE.oneRepMaxes, ["", "", "", ""]);
+let tmPercent = load(STORAGE.tmPercent, DEFAULT_TM_PERCENT);
+if (typeof tmPercent !== "number" || !(tmPercent > 0)) {
+  tmPercent = DEFAULT_TM_PERCENT;
+}
 
 const template = document.getElementById("card-template");
 const container = document.getElementById("cards");
+const refreshers = [];
 
 function percentAndReps(set) {
   const reps = set.amrap ? `${set.reps}+` : String(set.reps);
@@ -56,6 +68,11 @@ function renderResults(cycle) {
     .join("");
 
   return `
+    <div class="tm-line">
+      <span class="tm-line-label">Training Max</span>
+      <b>${String(cycle.trainingMax)} kg</b>
+      <span class="tm-line-pct">${cycle.tmPercent}% of 1RM</span>
+    </div>
     <div class="warmup">
       <span class="warmup-title">Warm-up</span>
       <div class="chips">${warmup}</div>
@@ -71,14 +88,14 @@ function renderResults(cycle) {
 function buildCard(index) {
   const node = template.content.firstElementChild.cloneNode(true);
   const exercise = node.querySelector(".exercise");
-  const tmInput = node.querySelector(".tm");
+  const rmInput = node.querySelector(".one-rm");
   const results = node.querySelector(".results");
 
   exercise.value = labels[index] ?? DEFAULT_LABELS[index] ?? "";
-  tmInput.value = tms[index] ?? "";
+  rmInput.value = oneRepMaxes[index] ?? "";
 
   const refresh = () => {
-    const cycle = buildCycle(tmInput.value);
+    const cycle = buildCycle(rmInput.value, tmPercent);
     if (!cycle) {
       results.hidden = true;
       results.innerHTML = "";
@@ -93,12 +110,13 @@ function buildCard(index) {
     save(STORAGE.labels, labels);
   });
 
-  tmInput.addEventListener("input", () => {
-    tms[index] = tmInput.value;
-    save(STORAGE.tms, tms);
+  rmInput.addEventListener("input", () => {
+    oneRepMaxes[index] = rmInput.value;
+    save(STORAGE.oneRepMaxes, oneRepMaxes);
     refresh();
   });
 
+  refreshers[index] = refresh;
   refresh();
   return node;
 }
@@ -106,6 +124,26 @@ function buildCard(index) {
 for (let index = 0; index < DEFAULT_LABELS.length; index += 1) {
   container.append(buildCard(index));
 }
+
+const percentInputs = [
+  ...document.querySelectorAll('input[name="tm-percent"]'),
+];
+
+function syncPercentInputs() {
+  for (const input of percentInputs) {
+    input.checked = Number(input.value) === tmPercent;
+  }
+}
+
+for (const input of percentInputs) {
+  input.addEventListener("change", () => {
+    if (!input.checked) return;
+    tmPercent = Number(input.value);
+    save(STORAGE.tmPercent, tmPercent);
+    refreshers.forEach((refresh) => refresh());
+  });
+}
+syncPercentInputs();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {

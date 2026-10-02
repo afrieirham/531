@@ -1,15 +1,23 @@
 # 5/3/1 Calculator
 
-A single-screen calculator that turns four Training Maxes into the weights for one 5/3/1 cycle. No assistance work.
+A single-screen calculator that turns four One-Rep Maxes into the weights for one 5/3/1 cycle. No assistance work.
 
 ## Language
 
+**One-Rep Max (1RM)**:
+The entered per-exercise maximum from which the Training Max is derived.
+_Avoid_: max, true max, best
+
 **Training Max (TM)**:
-The load every 5/3/1 percentage is calculated from. Entered directly per lift; this app does not derive it from a 1RM.
+The load every 5/3/1 percentage is calculated from. Derived from the entered 1RM at the chosen Training Max percentage.
 _Avoid_: 1RM, max, true max
 
+**Training Max percentage**:
+The fraction of the 1RM used as the Training Max, chosen globally as 90% or 85%.
+_Avoid_: TM %, max percentage
+
 **Exercise**:
-A named slot holding a Training Max and the resulting cycle of weights. Its label is free text, so the calculator is not tied to any fixed set of lifts.
+A named slot holding a One-Rep Max and the resulting cycle of weights. Its label is free text, so the calculator is not tied to any fixed set of lifts.
 _Avoid_: main lift, movement, lift
 
 **Cycle**:

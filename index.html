@@ -29,6 +29,18 @@
       <p class="tagline">One cycle, four exercises, every weight.</p>
     </header>
 
+    <div class="settings" role="radiogroup" aria-label="Training Max percentage">
+      <span class="settings-label">Training Max</span>
+      <label class="segment">
+        <input type="radio" name="tm-percent" value="90" checked />
+        <span>90% of 1RM</span>
+      </label>
+      <label class="segment">
+        <input type="radio" name="tm-percent" value="85" />
+        <span>85% of 1RM</span>
+      </label>
+    </div>
+
     <main id="cards" class="cards" aria-label="Exercises"></main>
 
     <template id="card-template">
@@ -43,10 +55,10 @@
               spellcheck="false"
             />
           </label>
-          <label class="field field-tm">
-            <span class="field-label">Training Max (kg)</span>
+          <label class="field field-1rm">
+            <span class="field-label">1RM (kg)</span>
             <input
-              class="tm"
+              class="one-rm"
               type="number"
               inputmode="decimal"
               min="0"
