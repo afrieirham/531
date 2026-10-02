@@ -66,12 +66,6 @@ function amrapTag(set) {
   return set.amrap ? '<span class="amrap-tag">AMRAP</span>' : "";
 }
 
-function setCell(set) {
-  return `
-    <span class="weight">${String(set.weight)}<span class="unit">kg</span></span>
-    <span class="meta">${percentAndReps(set)}</span>${amrapTag(set)}`;
-}
-
 function warmupSet(set) {
   return `
     <li class="now-set">
@@ -113,29 +107,6 @@ function nowBlock(cycle, weekIndex) {
     </div>`;
 }
 
-function allWeeks(cycle, weekIndex) {
-  const rows = cycle.weeks
-    .map(
-      (week, index) => `
-      <tr class="${index === weekIndex ? "is-current" : ""}">
-        <th scope="row">${week.name}</th>
-        ${week.sets.map((set) => `<td>${setCell(set)}</td>`).join("")}
-      </tr>`,
-    )
-    .join("");
-
-  return `
-    <details class="all-weeks">
-      <summary>All weeks</summary>
-      <table class="grid">
-        <thead>
-          <tr><th></th><th>Set 1</th><th>Set 2</th><th>Set 3</th></tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </details>`;
-}
-
 function renderResults(cycle, weekIndex) {
   return `
     <div class="tm-line">
@@ -143,8 +114,7 @@ function renderResults(cycle, weekIndex) {
       <b>${String(cycle.trainingMax)} kg</b>
     </div>
     ${warmupBlock(cycle)}
-    ${nowBlock(cycle, weekIndex)}
-    ${allWeeks(cycle, weekIndex)}`;
+    ${nowBlock(cycle, weekIndex)}`;
 }
 
 function buildCard(index) {
@@ -157,7 +127,6 @@ function buildCard(index) {
   rmInput.value = oneRepMaxes[index] ?? "";
 
   const refresh = () => {
-    const wasOpen = results.querySelector(".all-weeks")?.open ?? false;
     const cycle = buildCycle(rmInput.value, tmPercent);
     if (!cycle) {
       const raw = rmInput.value.trim();
@@ -166,8 +135,6 @@ function buildCard(index) {
       return;
     }
     results.innerHTML = renderResults(cycle, currentWeek - 1);
-    const details = results.querySelector(".all-weeks");
-    if (details && wasOpen) details.open = true;
     results.hidden = false;
   };
 
