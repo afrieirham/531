@@ -3,10 +3,14 @@ import { buildCycle } from "./calc.js";
 const DEFAULT_LABELS = ["Bench", "OHP", "Deadlift", "Squat"];
 const DEFAULT_ONE_REP_MAXES = ["65", "45", "115", "104"];
 const DEFAULT_TM_PERCENT = 90;
+const DEFAULT_WEEK = 1;
+const WEEK_MIN = 1;
+const WEEK_MAX = 4;
 const STORAGE = {
   labels: "531.labels",
   oneRepMaxes: "531.oneRepMaxes",
   tmPercent: "531.tmPercent",
+  week: "531.week",
 };
 
 function load(key, fallback) {
@@ -37,31 +41,70 @@ if (typeof tmPercent !== "number" || !(tmPercent > 0)) {
   tmPercent = DEFAULT_TM_PERCENT;
 }
 
+let currentWeek = load(STORAGE.week, DEFAULT_WEEK);
+if (
+  !Number.isInteger(currentWeek) ||
+  currentWeek < WEEK_MIN ||
+  currentWeek > WEEK_MAX
+) {
+  currentWeek = DEFAULT_WEEK;
+}
+
 const template = document.getElementById("card-template");
 const container = document.getElementById("cards");
 const refreshers = [];
+
+const EMPTY_RESULTS = `<p class="results-empty">Enter a 1RM to see this cycle.</p>`;
+const INVALID_RESULTS = `<p class="results-empty">1RM must be greater than 0 kg.</p>`;
 
 function percentAndReps(set) {
   const reps = set.amrap ? `${set.reps}+` : String(set.reps);
   return `${set.pct}% &times; ${reps}`;
 }
 
+function amrapTag(set) {
+  return set.amrap ? '<span class="amrap-tag">AMRAP</span>' : "";
+}
+
 function setCell(set) {
   return `
     <span class="weight">${String(set.weight)}<span class="unit">kg</span></span>
-    <span class="meta">${percentAndReps(set)}</span>`;
+    <span class="meta">${percentAndReps(set)}</span>${amrapTag(set)}`;
 }
 
 function warmupChip(set) {
   return `<span class="chip"><b>${String(set.weight)} kg</b> <small>${percentAndReps(set)}</small></span>`;
 }
 
-function renderResults(cycle) {
+function nowBlock(cycle, weekIndex) {
+  const week = cycle.weeks[weekIndex];
+  const sets = week.sets
+    .map(
+      (set) => `
+      <li class="now-set${set.amrap ? " is-amrap" : ""}">
+        <span class="weight">${String(set.weight)}<span class="unit">kg</span></span>
+        <span class="meta">${percentAndReps(set)}</span>
+        ${amrapTag(set)}
+      </li>`,
+    )
+    .join("");
+
+  return `
+    <div class="now">
+      <div class="now-head">
+        <span class="now-week">Week ${weekIndex + 1}</span>
+        <span class="now-type">${week.name}</span>
+      </div>
+      <ul class="now-sets">${sets}</ul>
+    </div>`;
+}
+
+function allWeeks(cycle, weekIndex) {
   const warmup = cycle.warmup.map(warmupChip).join("");
   const rows = cycle.weeks
     .map(
-      (week) => `
-      <tr>
+      (week, index) => `
+      <tr class="${index === weekIndex ? "is-current" : ""}">
         <th scope="row">${week.name}</th>
         ${week.sets.map((set) => `<td>${setCell(set)}</td>`).join("")}
       </tr>`,
@@ -69,21 +112,29 @@ function renderResults(cycle) {
     .join("");
 
   return `
+    <details class="all-weeks">
+      <summary>All weeks &amp; warm-up</summary>
+      <div class="warmup">
+        <span class="warmup-title">Warm-up</span>
+        <div class="chips">${warmup}</div>
+      </div>
+      <table class="grid">
+        <thead>
+          <tr><th></th><th>Set 1</th><th>Set 2</th><th>Set 3</th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </details>`;
+}
+
+function renderResults(cycle, weekIndex) {
+  return `
     <div class="tm-line">
-      <span class="tm-line-label">Training Max</span>
+      <span class="tm-line-label">TM</span>
       <b>${String(cycle.trainingMax)} kg</b>
-      <span class="tm-line-pct">${cycle.tmPercent}% of 1RM</span>
     </div>
-    <div class="warmup">
-      <span class="warmup-title">Warm-up</span>
-      <div class="chips">${warmup}</div>
-    </div>
-    <table class="grid">
-      <thead>
-        <tr><th></th><th>Set 1</th><th>Set 2</th><th>Set 3</th></tr>
-      </thead>
-      <tbody>${rows}</tbody>
-    </table>`;
+    ${nowBlock(cycle, weekIndex)}
+    ${allWeeks(cycle, weekIndex)}`;
 }
 
 function buildCard(index) {
@@ -96,13 +147,17 @@ function buildCard(index) {
   rmInput.value = oneRepMaxes[index] ?? "";
 
   const refresh = () => {
+    const wasOpen = results.querySelector(".all-weeks")?.open ?? false;
     const cycle = buildCycle(rmInput.value, tmPercent);
     if (!cycle) {
-      results.hidden = true;
-      results.innerHTML = "";
+      const raw = rmInput.value.trim();
+      results.innerHTML = raw === "" ? EMPTY_RESULTS : INVALID_RESULTS;
+      results.hidden = false;
       return;
     }
-    results.innerHTML = renderResults(cycle);
+    results.innerHTML = renderResults(cycle, currentWeek - 1);
+    const details = results.querySelector(".all-weeks");
+    if (details && wasOpen) details.open = true;
     results.hidden = false;
   };
 
@@ -145,6 +200,24 @@ for (const input of percentInputs) {
   });
 }
 syncPercentInputs();
+
+const weekInputs = [...document.querySelectorAll('input[name="week"]')];
+
+function syncWeekInputs() {
+  for (const input of weekInputs) {
+    input.checked = Number(input.value) === currentWeek;
+  }
+}
+
+for (const input of weekInputs) {
+  input.addEventListener("change", () => {
+    if (!input.checked) return;
+    currentWeek = Number(input.value);
+    save(STORAGE.week, currentWeek);
+    refreshers.forEach((refresh) => refresh());
+  });
+}
+syncWeekInputs();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {

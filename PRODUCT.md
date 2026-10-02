@@ -25,7 +25,8 @@ Used mid-workout at the gym, typically on a phone, one-handed, in a hurry. Weigh
 ## Capabilities and Constraints
 
 - Single screen: four exercise cards, each a free-text label plus one 1RM input; a global Training Max toggle (90% or 85% of 1RM).
-- Derives the Training Max and renders a warm-up block plus a four-week grid (5s, 3s, 5/3/1, deload); the top set is AMRAP.
+- A global current-week selector (weeks 1–4, default 1) drives every card. It is view/session context, deliberately persisted in `localStorage` so the screen can lead with "what to load now"; it is not cycle history or progression state.
+- Each card leads with the current week's three working sets; the warm-up block and the full four-week grid (5s, 3s, 5/3/1, deload) sit behind an "All weeks & warm-up" disclosure. The top set is AMRAP.
 - Weights snap to 2.5 kg increments; the Training Max itself is shown unrounded.
 - Kilograms are a deliberate constraint — imperial units are explicitly out of scope.
 - Installable PWA with an offline service worker; runs entirely client-side with no backend, accounts, or network dependency.

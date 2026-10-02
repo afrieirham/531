@@ -41,6 +41,30 @@
       </label>
     </div>
 
+    <div
+      class="settings settings-week"
+      role="radiogroup"
+      aria-label="Current week"
+    >
+      <span class="settings-label">Week</span>
+      <label class="segment">
+        <input type="radio" name="week" value="1" aria-label="Week 1, 5s" checked />
+        <span>1</span>
+      </label>
+      <label class="segment">
+        <input type="radio" name="week" value="2" aria-label="Week 2, 3s" />
+        <span>2</span>
+      </label>
+      <label class="segment">
+        <input type="radio" name="week" value="3" aria-label="Week 3, 5/3/1" />
+        <span>3</span>
+      </label>
+      <label class="segment">
+        <input type="radio" name="week" value="4" aria-label="Week 4, deload" />
+        <span>4</span>
+      </label>
+    </div>
+
     <main id="cards" class="cards" aria-label="Exercises"></main>
 
     <template id="card-template">
@@ -67,7 +91,7 @@
             />
           </label>
         </div>
-        <div class="results" hidden></div>
+        <div class="results" aria-live="polite" hidden></div>
       </section>
     </template>
 

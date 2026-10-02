@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-02T13:20:00Z",
+  "generatedAt": "2026-10-02T14:05:00Z",
   "title": "Design System: 5/3/1 Calculator",
   "extensions": {
     "colorMeta": {
@@ -99,13 +99,26 @@
         "displayName": "Muted Steel Dark",
         "canonical": "#94a3b8",
         "tonalRamp": ["#030b1a", "#1a2636", "#364355", "#556275", "#758498", "#97a6bb", "#bbcbe0", "#e0f0ff"]
+      },
+      "muted-steel-strong": {
+        "role": "neutral",
+        "displayName": "Muted Steel Strong",
+        "canonical": "#475569",
+        "tonalRamp": ["#040a16", "#1d2530", "#39424e", "#58616d", "#78828f", "#9aa5b3", "#bdc9d7", "#e2eefc"]
+      },
+      "on-accent": {
+        "role": "primary",
+        "displayName": "On-Accent",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#0b0b0b", "#252525", "#424242", "#616161", "#828282", "#a5a5a5", "#c9c9c9", "#eeeeee"]
       }
     },
     "typographyMeta": {
       "display": { "displayName": "Display", "purpose": "The app title only; the largest element on the page." },
       "title": { "displayName": "Title", "purpose": "Working weights and the Training Max value." },
       "body": { "displayName": "Body", "purpose": "Inputs, exercise labels, and full-sentence copy." },
-      "label": { "displayName": "Label", "purpose": "Field labels, grid column headers, and section eyebrows." }
+      "label": { "displayName": "Label", "purpose": "Field labels, grid column headers, and control labels." },
+      "now-weight": { "displayName": "Now Weight", "purpose": "The current week's set weights; one step louder than a grid cell." }
     },
     "shadows": [
       {
@@ -121,7 +134,7 @@
     ],
     "breakpoints": [
       { "name": "sm", "value": "640px" },
-      { "name": "lg", "value": "1200px" }
+      { "name": "lg", "value": "1320px" }
     ]
   },
   "components": [
@@ -174,6 +187,38 @@
       "css": ".ds-grid { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; color: var(--text, #0f172a); } .ds-grid th, .ds-grid td { text-align: left; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border, #e2e8f0); vertical-align: top; } .ds-grid thead th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted, #64748b); font-weight: 600; } .ds-grid tbody th { font-size: 0.85rem; font-weight: 600; color: var(--muted, #64748b); white-space: nowrap; } .ds-grid tbody tr:last-child th, .ds-grid tbody tr:last-child td { border-bottom: 0; } .ds-weight { display: block; font-size: 1rem; font-weight: 600; } .ds-weight .ds-unit { font-size: 0.72rem; font-weight: 500; color: var(--muted, #64748b); margin-left: 0.15rem; } .ds-meta { display: block; font-size: 0.75rem; color: var(--muted, #64748b); }"
     },
     {
+      "name": "Current-Week Control",
+      "kind": "nav",
+      "refersTo": "segment-pill-selected",
+      "description": "Second segmented pill row (WEEK 1-4) driving every card; sticky at the top on phones.",
+      "html": "<div class=\"ds-weekbar\" role=\"radiogroup\" aria-label=\"Current week\"><span class=\"ds-weekbar-label\">Week</span><label class=\"ds-segment ds-segment-selected\"><span>1</span></label><label class=\"ds-segment\"><span>2</span></label><label class=\"ds-segment\"><span>3</span></label><label class=\"ds-segment\"><span>4</span></label></div>",
+      "css": ".ds-weekbar { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; } .ds-weekbar-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted, #64748b); margin-right: 0.35rem; } .ds-segment { display: inline-flex; } .ds-segment span { display: inline-flex; align-items: center; min-height: 44px; padding: 0.4rem 0.75rem; border: 1px solid var(--border, #e2e8f0); background: var(--surface, #fff); color: var(--text, #0f172a); border-radius: 999px; font-size: 0.85rem; cursor: pointer; user-select: none; } .ds-segment span:hover { border-color: var(--accent, #2563eb); } .ds-segment-selected span { background: var(--accent, #2563eb); border-color: var(--accent, #2563eb); color: var(--on-accent, #fff); }"
+    },
+    {
+      "name": "Now Set",
+      "kind": "card",
+      "refersTo": "now-set",
+      "description": "The current week's three working sets, led on every card; the AMRAP tile is accented and tagged.",
+      "html": "<ul class=\"ds-now\"><li class=\"ds-now-set\"><span class=\"ds-weight\">37.5<span class=\"ds-unit\">kg</span></span><span class=\"ds-meta\">65% &times; 5</span></li><li class=\"ds-now-set\"><span class=\"ds-weight\">45<span class=\"ds-unit\">kg</span></span><span class=\"ds-meta\">75% &times; 5</span></li><li class=\"ds-now-set ds-now-amrap\"><span class=\"ds-weight\">50<span class=\"ds-unit\">kg</span></span><span class=\"ds-meta\">85% &times; 5+</span><span class=\"ds-amrap\">AMRAP</span></li></ul>",
+      "css": ".ds-now { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; } .ds-now-set { background: var(--surface-2, #f8fafc); border: 1px solid var(--border, #e2e8f0); border-radius: 10px; padding: 0.6rem 0.65rem; font-variant-numeric: tabular-nums; } .ds-now-amrap { border-color: var(--accent, #2563eb); } .ds-now-set .ds-weight { display: block; font-size: 1.15rem; font-weight: 600; white-space: nowrap; } .ds-now-set .ds-weight .ds-unit { font-size: 0.72rem; font-weight: 500; color: var(--muted, #64748b); margin-left: 0.15rem; } .ds-now-set .ds-meta { display: block; font-size: 0.75rem; color: var(--muted-strong, #475569); white-space: nowrap; } .ds-amrap { display: inline-block; margin-top: 0.35rem; padding: 0.12rem 0.4rem; border-radius: 999px; background: var(--accent, #2563eb); color: var(--on-accent, #fff); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }"
+    },
+    {
+      "name": "All-Weeks Disclosure",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Native details holding the warm-up and full four-week grid, collapsed by default.",
+      "html": "<details class=\"ds-details\"><summary>All weeks &amp; warm-up</summary><div class=\"ds-details-body\">Warm-up + full week &times; set grid</div></details>",
+      "css": ".ds-details { margin-top: 0.9rem; border-top: 1px solid var(--border, #e2e8f0); padding-top: 0.4rem; } .ds-details summary { display: flex; align-items: center; min-height: 44px; cursor: pointer; list-style: none; font-size: 0.8rem; font-weight: 600; color: var(--muted-strong, #475569); } .ds-details summary::-webkit-details-marker { display: none; } .ds-details summary::after { content: ''; width: 0.5rem; height: 0.5rem; margin-left: auto; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); transition: transform 150ms ease; } .ds-details[open] summary::after { transform: rotate(-135deg); } .ds-details summary:hover { color: var(--accent, #2563eb); } .ds-details summary:focus-visible { outline: 2px solid var(--accent, #2563eb); outline-offset: 2px; border-radius: 6px; }"
+    },
+    {
+      "name": "Empty / Invalid State",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Stable-height message shown when a 1RM is empty or non-positive.",
+      "html": "<p class=\"ds-empty\">Enter a 1RM to see this cycle.</p>",
+      "css": ".ds-empty { margin: 0; min-height: 4.5rem; display: flex; align-items: center; color: var(--muted-strong, #475569); font-size: 0.9rem; }"
+    },
+    {
       "name": "App Header",
       "kind": "custom",
       "refersTo": null,
@@ -184,7 +229,7 @@
   ],
   "narrative": {
     "northStar": "The Gym Whiteboard",
-    "overview": "This is the dry-erase board by the rack, not a training app. You walk up, read today's numbers, and walk away. The system is calm, exact, and unobtrusive: chrome stays quiet, numbers stay loud, and nothing on screen asks to be admired. Density is comfortable rather than compressed, because the reader is standing, one-handed, mid-set.\n\nThe interface is a single flat plane of cards on a cool grey ground. Depth is implied by hairline borders and one tonal step between the page, the card, and the inset fields — the card's faint shadow is a separator, not a hierarchy. One accent color, a measured blue, marks the only interactive state that matters: which Training Max percentage is active, and what currently has focus.\n\nEverything here is instrument-like. Weights are set in tabular figures so columns align and nothing jitters as values change; labels are small, uppercase, and letter-spaced like the silkscreen on a machine; the results grid reads top-to-bottom without decoration. The system must never look like an athletic or fitness brand — no neon, no grit, no motivational energy — and equally not like a marketing dashboard.",
+    "overview": "This is the dry-erase board by the rack, not a training app. You walk up, read today's numbers, and walk away. The system is calm, exact, and unobtrusive: chrome stays quiet, numbers stay loud, and nothing on screen asks to be admired. Density is comfortable rather than compressed, because the reader is standing, one-handed, mid-set.\n\nThe interface is a single flat plane of cards on a cool grey ground. Depth is implied by hairline borders and one tonal step between the page, the card, and the inset fields — the card's faint shadow is a separator, not a hierarchy. One accent color, a measured blue, marks the only interactive states that matter: which Training Max percentage and which week are active, and what currently has focus.\n\nThe screen leads with now. A global current-week control drives every card; each card shows that week's three working sets at full size, with the AMRAP top set tagged, and folds the warm-up and the full four-week grid into an \"All weeks & warm-up\" disclosure. The flat all-weeks matrix is a reference the lifter opens, never the default view.\n\nEverything here is instrument-like. Weights are set in tabular figures so columns align and nothing jitters as values change; labels are small, uppercase, and letter-spaced like the silkscreen on a machine; the results grid reads top-to-bottom without decoration. The system must never look like an athletic or fitness brand — no neon, no grit, no motivational energy — and equally not like a marketing dashboard.",
     "keyCharacteristics": [
       "Calm, exact, unobtrusive; the numbers are the only loud thing.",
       "One accent (Signal Azure), reserved for active state and focus.",
@@ -194,24 +239,27 @@
       "Instrument-like controls: legible, obvious, uncharming."
     ],
     "rules": [
-      { "name": "The One Accent Rule", "body": "Signal Azure appears only on the active selection and on focus outlines. It is never used for body text, large fills, or decoration.", "section": "colors" },
+      { "name": "The One Accent Rule", "body": "Signal Azure appears only on the active selection, the AMRAP tag, and focus outlines. It is never used for body text, large fills, or decoration.", "section": "colors" },
       { "name": "The Cool Steel Rule", "body": "Every neutral is cool and blue-leaning. No warm grey, cream, or brown-tinted surface enters the system.", "section": "colors" },
-      { "name": "The Tabular Figures Rule", "body": "Every weight and percentage in the results grid uses tabular figures, so digits align in columns and never reflow as values change.", "section": "typography" },
+      { "name": "The On-Accent Rule", "body": "Text on a filled azure surface uses the On-Accent token, never a hard-coded white; in dark mode that is near-black, so the bright azure fill stays legible.", "section": "colors" },
+      { "name": "The Tabular Figures Rule", "body": "Every weight and percentage uses tabular figures — the results grid, the warm-up chips, and the now-set tiles — so digits align in columns and never reflow as values change.", "section": "typography" },
       { "name": "The Flat-By-Default Rule", "body": "Surfaces are flat at rest, and the card separator is the system's only shadow. It never intensifies on interaction.", "section": "elevation" }
     ],
     "dos": [
-      "Do keep exactly one accent. Signal Azure is for the active segment and focus rings only.",
+      "Do keep exactly one accent. Signal Azure is for the active segment, the AMRAP tag, and focus rings only.",
       "Do use font-variant-numeric: tabular-nums for every weight and percentage.",
       "Do keep all neutrals cool; pair Cool Paper with Ink Slate and Midnight Steel with Pale Slate.",
       "Do separate surfaces with 1px hairlines and one tonal step before reaching for any shadow.",
-      "Do keep the weight values the largest, heaviest elements on a card."
+      "Do keep the current week's weights the largest, heaviest numbers on a card.",
+      "Do use the On-Accent token for any text on a filled azure surface."
     ],
     "donts": [
       "Don't introduce a second accent hue or any warm neutral.",
       "Don't deepen or add shadows on hover or focus; express state through color and outline only.",
       "Don't borrow athletic or fitness-brand signals — no neon, grit, gradients, or motivational energy.",
       "Don't exceed a 14px radius on cards or reintroduce sharp corners.",
-      "Don't set weight or percentage figures in proportional (non-tabular) figures."
+      "Don't set weight or percentage figures in proportional (non-tabular) figures.",
+      "Don't show the full all-weeks matrix by default; the now-row leads and the matrix stays behind its disclosure."
     ]
   }
 }
