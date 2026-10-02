@@ -2,7 +2,9 @@ import { buildCycle } from "./calc.js";
 
 const DEFAULT_LABELS = ["Bench", "OHP", "Deadlift", "Squat"];
 const DEFAULT_ONE_REP_MAXES = ["65", "45", "115", "104"];
-const DEFAULT_TM_PERCENT = 90;
+const DEFAULT_TM_PERCENT = 85;
+const TM_MIN = 1;
+const TM_MAX = 100;
 const DEFAULT_WEEK = 1;
 const WEEK_MIN = 1;
 const WEEK_MAX = 4;
@@ -37,7 +39,12 @@ function save(key, value) {
 const labels = load(STORAGE.labels, DEFAULT_LABELS);
 const oneRepMaxes = load(STORAGE.oneRepMaxes, DEFAULT_ONE_REP_MAXES);
 let tmPercent = load(STORAGE.tmPercent, DEFAULT_TM_PERCENT);
-if (typeof tmPercent !== "number" || !(tmPercent > 0)) {
+if (
+  typeof tmPercent !== "number" ||
+  !Number.isFinite(tmPercent) ||
+  tmPercent < TM_MIN ||
+  tmPercent > TM_MAX
+) {
   tmPercent = DEFAULT_TM_PERCENT;
 }
 
@@ -158,25 +165,16 @@ for (let index = 0; index < DEFAULT_LABELS.length; index += 1) {
   container.append(buildCard(index));
 }
 
-const percentInputs = [
-  ...document.querySelectorAll('input[name="tm-percent"]'),
-];
+const percentInput = document.querySelector(".tm-percent");
+percentInput.value = String(tmPercent);
 
-function syncPercentInputs() {
-  for (const input of percentInputs) {
-    input.checked = Number(input.value) === tmPercent;
-  }
-}
-
-for (const input of percentInputs) {
-  input.addEventListener("change", () => {
-    if (!input.checked) return;
-    tmPercent = Number(input.value);
-    save(STORAGE.tmPercent, tmPercent);
-    refreshers.forEach((refresh) => refresh());
-  });
-}
-syncPercentInputs();
+percentInput.addEventListener("input", () => {
+  const value = Number(percentInput.value);
+  if (!Number.isFinite(value) || value < TM_MIN || value > TM_MAX) return;
+  tmPercent = value;
+  save(STORAGE.tmPercent, tmPercent);
+  refreshers.forEach((refresh) => refresh());
+});
 
 const weekInputs = [...document.querySelectorAll('input[name="week"]')];
 

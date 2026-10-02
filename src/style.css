@@ -86,6 +86,50 @@ body {
   margin-right: 0.35rem;
 }
 
+.settings-field {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tm-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  padding: 0 0.65rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 9px;
+}
+
+.tm-input:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.tm-percent {
+  width: 3.25rem;
+  padding: 0.4rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tm-percent:focus {
+  outline: none;
+}
+
+.tm-input-suffix {
+  font-size: 0.85rem;
+  color: var(--muted-strong);
+}
+
 .segment {
   position: relative;
   display: inline-flex;

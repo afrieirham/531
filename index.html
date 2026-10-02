@@ -29,15 +29,22 @@
       <p class="tagline">One cycle, four exercises, every weight.</p>
     </header>
 
-    <div class="settings" role="radiogroup" aria-label="Training Max percentage">
-      <span class="settings-label">Training Max</span>
-      <label class="segment">
-        <input type="radio" name="tm-percent" value="90" checked />
-        <span>90% of 1RM</span>
-      </label>
-      <label class="segment">
-        <input type="radio" name="tm-percent" value="85" />
-        <span>85% of 1RM</span>
+    <div class="settings">
+      <label class="settings-field" for="tm-percent">
+        <span class="settings-label">Training Max</span>
+        <span class="tm-input">
+          <input
+            id="tm-percent"
+            class="tm-percent"
+            type="number"
+            inputmode="decimal"
+            min="1"
+            max="100"
+            step="1"
+            value="85"
+          />
+          <span class="tm-input-suffix">% of 1RM</span>
+        </span>
       </label>
     </div>
 
