@@ -1,6 +1,7 @@
 import { buildCycle } from "./calc.js";
 
-const DEFAULT_LABELS = ["Bench Press", "Squat", "Deadlift", "Overhead Press"];
+const DEFAULT_LABELS = ["Bench", "OHP", "Deadlift", "Squat"];
+const DEFAULT_ONE_REP_MAXES = ["65", "45", "115", "104"];
 const DEFAULT_TM_PERCENT = 90;
 const STORAGE = {
   labels: "531.labels",
@@ -30,7 +31,7 @@ function save(key, value) {
 }
 
 const labels = load(STORAGE.labels, DEFAULT_LABELS);
-const oneRepMaxes = load(STORAGE.oneRepMaxes, ["", "", "", ""]);
+const oneRepMaxes = load(STORAGE.oneRepMaxes, DEFAULT_ONE_REP_MAXES);
 let tmPercent = load(STORAGE.tmPercent, DEFAULT_TM_PERCENT);
 if (typeof tmPercent !== "number" || !(tmPercent > 0)) {
   tmPercent = DEFAULT_TM_PERCENT;

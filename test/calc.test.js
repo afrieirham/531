@@ -56,7 +56,7 @@ test("defaults to a training max of 90% of the 1RM", () => {
 
 test("derives weights straight from the 1RM and chosen percentage", () => {
   const cycle = buildCycle(87, 90);
-  assert.equal(cycle.trainingMax, 77.5);
+  assert.equal(cycle.trainingMax, 78.3);
   assert.deepEqual(
     cycle.warmup.map((set) => set.weight),
     [32.5, 40, 47.5],
@@ -79,6 +79,11 @@ test("an 85% training max yields lighter weights", () => {
     cycle.weeks[0].sets.map((set) => set.weight),
     [55, 65, 72.5],
   );
+});
+
+test("shows the derived training max unrounded (not snapped to 2.5 kg)", () => {
+  const cycle = buildCycle(104, 90);
+  assert.equal(cycle.trainingMax, 93.6);
 });
 
 test("returns no cycle for a missing or non-positive input", () => {

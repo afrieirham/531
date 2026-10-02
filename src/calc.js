@@ -46,6 +46,10 @@ function roundToIncrement(value) {
   return Math.round(Math.round(value / INCREMENT_KG) * INCREMENT_KG * 100) / 100;
 }
 
+function roundToHundredth(value) {
+  return Math.round(value * 100) / 100;
+}
+
 function withWeight(trainingMax) {
   return (set) => ({
     pct: set.pct,
@@ -66,7 +70,7 @@ export function buildCycle(oneRepMax, tmPercent = DEFAULT_TM_PERCENT) {
 
   return {
     tmPercent: percent,
-    trainingMax: roundToIncrement(trainingMax),
+    trainingMax: roundToHundredth(trainingMax),
     warmup: WARMUP.map(weigh),
     weeks: WEEKS.map((week) => ({
       name: week.name,
