@@ -40,7 +40,11 @@
 
 body {
   margin: 0;
-  padding: 1.25rem clamp(0.75rem, 3vw, 2rem) 3rem;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem clamp(0.75rem, 3vw, 2rem) 1rem;
   background: var(--bg);
   color: var(--text);
   caret-color: var(--accent);
@@ -48,9 +52,17 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+@media (min-width: 640px) {
+  body {
+    overflow: hidden;
+  }
+}
+
 .app-header {
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto 0.9rem;
+  flex: 0 0 auto;
 }
 
 .app-header h1 {
@@ -66,12 +78,14 @@ body {
 }
 
 .settings {
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto 1rem;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.4rem;
+  flex: 0 0 auto;
 }
 
 .settings-week {
@@ -114,9 +128,9 @@ body {
 .tm-input {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
   min-height: 44px;
-  padding: 0 0.65rem;
+  padding: 0 0.75rem 0 0.6rem;
   border: 1px solid var(--border);
   background: var(--surface);
   border-radius: 9px;
@@ -129,7 +143,7 @@ body {
 }
 
 .tm-percent {
-  width: 3.25rem;
+  width: 2.1rem;
   padding: 0.4rem 0;
   border: 0;
   background: transparent;
@@ -223,17 +237,22 @@ body {
 }
 
 .cards {
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr;
   align-items: start;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 @media (min-width: 640px) {
   .cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-y: auto;
+    align-content: start;
   }
 }
 
