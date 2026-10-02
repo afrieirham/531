@@ -115,12 +115,14 @@ function nowBlock(cycle, weekIndex) {
 }
 
 function renderResults(cycle, weekIndex) {
+  const week = cycle.weeks[weekIndex];
+  const warmup = week.name === "deload" ? "" : warmupBlock(cycle);
   return `
     <div class="tm-line">
       <span class="tm-line-label">TM</span>
       <b>${String(cycle.trainingMax)} kg</b>
     </div>
-    ${warmupBlock(cycle)}
+    ${warmup}
     ${nowBlock(cycle, weekIndex)}`;
 }
 
