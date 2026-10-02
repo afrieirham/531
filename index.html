@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>5/3/1 Calculator</title>
+    <meta
+      name="description"
+      content="Turn four Training Maxes into a full 5/3/1 cycle."
+    />
+    <meta
+      name="theme-color"
+      content="#f1f5f9"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0b1220"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>5/3/1 Calculator</h1>
+      <p class="tagline">One cycle, four exercises, every weight.</p>
+    </header>
+
+    <main id="cards" class="cards" aria-label="Exercises"></main>
+
+    <template id="card-template">
+      <section class="card">
+        <div class="card-inputs">
+          <label class="field">
+            <span class="field-label">Exercise</span>
+            <input
+              class="exercise"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+          <label class="field field-tm">
+            <span class="field-label">Training Max (kg)</span>
+            <input
+              class="tm"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="2.5"
+              placeholder="0"
+            />
+          </label>
+        </div>
+        <div class="results" hidden></div>
+      </section>
+    </template>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
