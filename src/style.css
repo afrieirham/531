@@ -54,6 +54,7 @@ body {
 
 @media (min-width: 640px) {
   body {
+    height: 100dvh;
     overflow: hidden;
   }
 }
@@ -256,7 +257,7 @@ body {
   }
 }
 
-@media (min-width: 1320px) {
+@media (min-width: 1024px) {
   .cards {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
