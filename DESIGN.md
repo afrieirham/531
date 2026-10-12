@@ -9,18 +9,18 @@ colors:
   clean-white: "#ffffff"
   panel-mist: "#f8fafc"
   cool-paper: "#f1f5f9"
-  slate-panel: "#111a2e"
-  slate-panel-2: "#16213a"
-  midnight-steel: "#0b1220"
+  obsidian: "#000000"
+  charcoal-panel: "#111111"
+  charcoal-deep: "#1c1c1c"
   hairline: "#e2e8f0"
-  hairline-dark: "#24314d"
+  hairline-dark: "#2e2e2e"
   ink-slate: "#0f172a"
-  pale-slate: "#e2e8f0"
+  pale-slate: "#f5f5f5"
   muted-steel: "#64748b"
-  muted-steel-dark: "#94a3b8"
+  muted-neutral-dark: "#a1a1a1"
   muted-steel-strong: "#475569"
   on-accent: "#ffffff"
-  on-accent-dark: "#0b1220"
+  on-accent-dark: "#000000"
 typography:
   display:
     fontFamily: "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif"
@@ -111,18 +111,18 @@ Everything here is instrument-like. Weights are set in tabular figures so column
 **Key Characteristics:**
 - Calm, exact, unobtrusive; the numbers are the only loud thing.
 - One accent (Signal Azure), reserved for active state and focus.
-- Cool-slate neutrals only; no warm greys.
+- Cool-slate neutrals in light theme, pure black in dark; no warm greys.
 - Flat by default; hairlines and tonal steps carry separation.
 - Tabular figures for every weight and percentage.
 - Instrument-like controls: legible, obvious, uncharming.
 
 ## Colors
 
-A cool slate family carries every surface and text role, lit by a single measured azure. The palette is theme-symmetric: the light theme runs Cool Paper → Clean White → Panel Mist → Ink Slate, the dark theme runs Midnight Steel → Slate Panel → Slate Panel Deep → Pale Slate, and the azure accent lifts from `#2563eb` to `#60a5fa` to hold contrast on the dark ground.
+A cool slate family carries every light surface and text role, lit by a single measured azure. The palette is theme-symmetric: the light theme runs Cool Paper → Clean White → Panel Mist → Ink Slate, the dark theme runs Obsidian → Charcoal Panel → Charcoal Deep → Pale Slate, and the azure accent lifts from `#2563eb` to `#60a5fa` to hold contrast on the dark ground.
 
 ### Primary
 - **Signal Azure** (#2563eb): the single accent, light theme. Fills the selected Training Max segment and draws every `:focus-visible` outline. Its rarity is the point.
-- **Signal Azure Bright** (#60a5fa): the same role in the dark theme, raised in lightness so it reads against Midnight Steel.
+- **Signal Azure Bright** (#60a5fa): the same role in the dark theme, raised in lightness so it reads against Obsidian.
 
 ### Tertiary
 - **Azure Wash** (#dbeafe) and **Azure Deep** (#1e3a8a): the `--accent-soft` pair, reserved for a future low-emphasis accent surface. Defined but not yet used in the interface.
@@ -135,18 +135,18 @@ A cool slate family carries every surface and text role, lit by a single measure
 - **Ink Slate** (#0f172a): primary text in light theme.
 - **Muted Steel** (#64748b): field labels, column headers, and unit suffixes in light theme.
 - **Muted Steel Strong** (#475569): helper text and secondary values that must clear AA on the page ground — the tagline and metadata. The one neutral stepped darker than Muted Steel to hold contrast on Cool Paper.
-- **Midnight Steel** (#0b1220): the dark-theme page background, the PWA/`theme-color` value, and the dark on-accent text.
-- **Slate Panel** (#111a2e): the card surface in dark theme.
-- **Slate Panel Deep** (#16213a): the inset step — input, chip, and now-set fills in dark theme.
-- **Hairline Dark** (#24314d): dark-theme borders and dividers.
-- **Pale Slate** (#e2e8f0): primary text in dark theme (same value as the light hairline, different role).
-- **Muted Steel Dark** (#94a3b8): field labels and secondary text in dark theme, where it already clears AA on the dark ground.
-- **On-Accent** (#ffffff light / #0b1220 dark): the text that sits on a filled Signal Azure surface — the selected segment and the AMRAP tag. It flips with the theme so the azure fill always carries legible text.
+- **Obsidian** (#000000): the dark-theme page background, the PWA/`theme-color` value, and the dark on-accent text.
+- **Charcoal Panel** (#111111): the card surface in dark theme.
+- **Charcoal Deep** (#1c1c1c): the inset step — input, chip, and now-set fills in dark theme.
+- **Hairline Dark** (#2e2e2e): dark-theme borders and dividers.
+- **Pale Slate** (#f5f5f5): primary text in dark theme.
+- **Muted Neutral Dark** (#a1a1a1): field labels and secondary text in dark theme, where it already clears AA on the dark ground.
+- **On-Accent** (#ffffff light / #000000 dark): the text that sits on a filled Signal Azure surface — the selected segment and the AMRAP tag. It flips with the theme so the azure fill always carries legible text.
 
 ### Named Rules
 **The One Accent Rule.** Signal Azure appears only on the active selection, the AMRAP tag, and focus outlines. It is never used for body text, large fills, or decoration.
 
-**The Cool Steel Rule.** Every neutral is cool and blue-leaning. No warm grey, cream, or brown-tinted surface enters the system.
+**The Cool Steel Rule.** Every light-theme neutral is cool and blue-leaning; the dark theme is pure black and neutral grey. No warm grey, cream, or brown-tinted surface enters the system.
 
 **The On-Accent Rule.** Text on a filled azure surface uses the On-Accent token, never a hard-coded white; in dark mode that is near-black, so the bright azure fill stays legible.
 
@@ -192,7 +192,7 @@ Softly rounded throughout, with a short radius ladder: chips and warm-up at `8px
 ### Segmented Selection Pill
 - **Shape:** fully round (999px), inline-flex, hairline border, `min-height: 44px` for touch.
 - **Default:** Clean White surface, Ink Slate text at `0.85rem`, padding `0.4rem 0.75rem`.
-- **Selected:** filled with Signal Azure, border and text set to the On-Accent token (#ffffff light, #0b1220 dark); the only filled accent surface besides the AMRAP tag.
+- **Selected:** filled with Signal Azure, border and text set to the On-Accent token (#ffffff light, #000000 dark); the only filled accent surface besides the AMRAP tag.
 - **Hover:** border shifts to Signal Azure.
 - **Focus:** `:focus-visible` draws a 2px Signal Azure outline offset by 2px.
 - **Used by:** both the Training Max control and the Week control.
@@ -225,7 +225,7 @@ Softly rounded throughout, with a short radius ladder: chips and warm-up at `8px
 
 ### Cards / Containers
 - **Corner Style:** `14px` radius.
-- **Background:** Clean White (light) / Slate Panel (dark).
+- **Background:** Clean White (light) / Charcoal Panel (dark).
 - **Shadow Strategy:** the Ambient Separator, per Elevation & Depth.
 - **Border:** 1px Hairline / Hairline Dark.
 - **Internal Padding:** `1rem`; the results block is divided from the inputs by a hairline top rule, and the disclosure from the now-row by a second hairline.
@@ -253,7 +253,7 @@ Softly rounded throughout, with a short radius ladder: chips and warm-up at `8px
 ### Do:
 - **Do** keep exactly one accent. Signal Azure is for the active segment, the AMRAP tag, and focus rings only.
 - **Do** use `font-variant-numeric: tabular-nums` for every weight and percentage.
-- **Do** keep all neutrals cool; pair Cool Paper with Ink Slate and Midnight Steel with Pale Slate.
+- **Do** keep the light theme cool; pair Cool Paper with Ink Slate and Obsidian with Pale Slate.
 - **Do** separate surfaces with 1px hairlines and one tonal step before reaching for any shadow.
 - **Do** keep the current week's weights the largest, heaviest numbers on a card.
 - **Do** use the On-Accent token for any text on a filled azure surface.
