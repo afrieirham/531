@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>5/3/1 Calculator</title>
+    <title>5/3/1 planner</title>
     <meta
       name="description"
       content="Turn four Training Maxes into a full 5/3/1 cycle."
     />
     <meta
       name="theme-color"
-      content="#f1f5f9"
+      content="#f4f4f5"
       media="(prefers-color-scheme: light)"
     />
     <meta
       name="theme-color"
-      content="#0b1220"
+      content="#000000"
       media="(prefers-color-scheme: dark)"
     />
     <link rel="manifest" href="./manifest.webmanifest" />
@@ -24,12 +24,7 @@
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
-    <header class="app-header">
-      <h1>5/3/1 Calculator</h1>
-      <p class="tagline">One cycle, four exercises, every weight.</p>
-    </header>
-
-    <div class="settings">
+    <header class="settings">
       <label class="settings-field" for="tm-percent">
         <span class="settings-label">Training Max</span>
         <span class="tm-input">
@@ -46,31 +41,29 @@
           <span class="tm-input-suffix">% of 1RM</span>
         </span>
       </label>
-    </div>
 
-    <div
-      class="settings settings-week"
-      role="radiogroup"
-      aria-label="Current week"
-    >
-      <span class="settings-label">Week</span>
-      <label class="segment">
-        <input type="radio" name="week" value="1" aria-label="Week 1, 5s" checked />
-        <span>1</span>
-      </label>
-      <label class="segment">
-        <input type="radio" name="week" value="2" aria-label="Week 2, 3s" />
-        <span>2</span>
-      </label>
-      <label class="segment">
-        <input type="radio" name="week" value="3" aria-label="Week 3, 5/3/1" />
-        <span>3</span>
-      </label>
-      <label class="segment">
-        <input type="radio" name="week" value="4" aria-label="Week 4, deload" />
-        <span>4</span>
-      </label>
-    </div>
+      <h1 class="app-title">5/3/1 planner</h1>
+
+      <div class="settings-week" role="radiogroup" aria-label="Current week">
+        <span class="settings-label">Week</span>
+        <label class="segment">
+          <input type="radio" name="week" value="1" aria-label="Week 1, 5s" checked />
+          <span>1</span>
+        </label>
+        <label class="segment">
+          <input type="radio" name="week" value="2" aria-label="Week 2, 3s" />
+          <span>2</span>
+        </label>
+        <label class="segment">
+          <input type="radio" name="week" value="3" aria-label="Week 3, 5/3/1" />
+          <span>3</span>
+        </label>
+        <label class="segment">
+          <input type="radio" name="week" value="4" aria-label="Week 4, deload" />
+          <span>4</span>
+        </label>
+      </div>
+    </header>
 
     <main id="cards" class="cards" aria-label="Exercises"></main>
 
