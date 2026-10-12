@@ -1,5 +1,5 @@
 ---
-name: 5/3/1 Calculator
+name: 5/3/1 planner
 description: A single-screen 5/3/1 cycle calculator for one lifter at the gym.
 colors:
   ink: "#09090b"
@@ -18,12 +18,12 @@ colors:
   on-accent: "#ffffff"
   on-accent-dark: "#09090b"
 typography:
-  display:
+  appTitle:
     fontFamily: "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif"
-    fontSize: "clamp(1.35rem, 4vw, 1.8rem)"
-    fontWeight: 700
+    fontSize: "1rem"
+    fontWeight: 400
     lineHeight: 1.5
-    letterSpacing: "-0.02em"
+    letterSpacing: "normal"
   title:
     fontFamily: "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif"
     fontSize: "1rem"
@@ -90,7 +90,7 @@ components:
     padding: "0.12rem 0.4rem"
 ---
 
-# Design System: 5/3/1 Calculator
+# Design System: 5/3/1 planner
 
 ## Overview
 
@@ -127,7 +127,7 @@ The system is black and white. A neutral ink-and-paper family carries every surf
 - **Hairline** (#e4e4e7): light-theme borders, dividers, and the results-grid rules.
 - **Ink** (#09090b): primary text and the accent in light theme.
 - **Muted Ink** (#71717a): field labels, column headers, and unit suffixes in light theme.
-- **Muted Ink Strong** (#52525b): helper text and secondary values that must clear AA on the page ground — the tagline and metadata. The one neutral stepped darker than Muted Ink to hold contrast on Paper.
+- **Muted Ink Strong** (#52525b): helper text and secondary values that must clear AA on the page ground — the metadata beneath a weight. The one neutral stepped darker than Muted Ink to hold contrast on Paper.
 - **Obsidian** (#000000): the dark-theme page background and the PWA/`theme-color` value.
 - **Charcoal Panel** (#111111): the card surface in dark theme.
 - **Charcoal Deep** (#1c1c1c): the inset step — input, chip, and now-set fills in dark theme.
@@ -152,7 +152,7 @@ The system is black and white. A neutral ink-and-paper family carries every surf
 **Character:** One system family doing all the work, differentiated by size, weight, and case rather than by a second face. Small uppercase labels and tabular numbers give it the plain, silkscreened feel of an instrument panel.
 
 ### Hierarchy
-- **Display** (700, `clamp(1.35rem, 4vw, 1.8rem)`, −0.02em): the app title only. The single largest element on the page.
+- **App Title** (400, `1rem`): the "5/3/1 planner" wordmark, set in plain body weight and centred inline in the control bar. No display face and no oversized type — it is a quiet label, not a headline.
 - **Title** (600, `1rem`): working weights and the Training Max value — the numbers the lifter came for.
 - **Body** (400, `16px`/1.5): inputs, exercise labels, and full-sentence copy.
 - **Label** (600, `0.72rem`, uppercase, 0.06em): field labels, grid column headers, and control labels.
@@ -163,7 +163,7 @@ The system is black and white. A neutral ink-and-paper family carries every surf
 
 ## Layout
 
-A single centered column capped at 1400px, with page padding of `1.25rem` top, `clamp(0.75rem, 3vw, 2rem)` inline, and `3rem` bottom. One control bar sits above the cards, holding the Training Max field and the Week selector on a single row at opposite ends (`justify-content: space-between`, `0.75rem` minimum gap, wrapping to a second line on narrow phones); on phones the bar is sticky at the top so the current week is always in view. The exercise cards form a responsive grid: one column on phones, two columns from 640px, four columns from 1024px (so an iPad in landscape reaches the four-up view), always with a `1rem` gap. Each card stacks a compact input row (free-text exercise label flexible, the 1RM field fixed at `7.5rem`) above the results block, separated by a hairline top border. The results block leads with the Training Max line and the current week's three-set row, then the collapsed "All weeks & warm-up" disclosure. Spacing is comfortable, never dense: `1rem` card padding, `0.75rem` between internal groups, `0.5rem` between now-set tiles, `0.4rem` between chips. The now-layer is the reading target; the full four-week matrix is deliberately behind the disclosure, so the collapsed page is shorter than the reference view (on a 390px phone the collapsed page is roughly two screens for all four lifts).
+A single centered column capped at 1400px, with page padding of `1.25rem` top, `clamp(0.75rem, 3vw, 2rem)` inline, and `3rem` bottom. One control bar doubles as the header, sitting above the cards as a three-column row (`1fr auto 1fr`): the Training Max field at the left, the "5/3/1 planner" wordmark centred, and the Week selector at the right. On phones the title takes its own centred line above the two controls, and the bar is sticky at the top so the current week is always in view. The exercise cards form a responsive grid: one column on phones, two columns from 640px, four columns from 1024px (so an iPad in landscape reaches the four-up view), always with a `1rem` gap. Each card stacks a compact input row (free-text exercise label flexible, the 1RM field fixed at `7.5rem`) above the results block, separated by a hairline top border. The results block leads with the Training Max line and the current week's three-set row, then the collapsed "All weeks & warm-up" disclosure. Spacing is comfortable, never dense: `1rem` card padding, `0.75rem` between internal groups, `0.5rem` between now-set tiles, `0.4rem` between chips. The now-layer is the reading target; the full four-week matrix is deliberately behind the disclosure, so the collapsed page is shorter than the reference view (on a 390px phone the collapsed page is roughly two screens for all four lifts).
 
 ## Elevation & Depth
 
@@ -239,7 +239,7 @@ Softly rounded throughout, with a short radius ladder: chips and warm-up at `8px
 - **Current row:** the row matching the selected week carries the Panel Mist tint and Ink row-label text.
 
 ### App Header
-- **Style:** flat, no border, no background. The Display title with a `0.95rem` Muted Ink Strong tagline beneath.
+- **Style:** flat, no border, no background, and no separate header block — the control bar is the header. The Training Max field sits left, the "5/3/1 planner" wordmark is centred in plain body weight (`1rem`/400), and the Week selector sits right. There is no tagline.
 
 ## Do's and Don'ts
 

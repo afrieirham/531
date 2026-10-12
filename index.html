@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>5/3/1 Calculator</title>
+    <title>5/3/1 planner</title>
     <meta
       name="description"
       content="Turn four Training Maxes into a full 5/3/1 cycle."
@@ -24,12 +24,7 @@
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
-    <header class="app-header">
-      <h1>5/3/1 Calculator</h1>
-      <p class="tagline">One cycle, four exercises, every weight.</p>
-    </header>
-
-    <div class="settings">
+    <header class="settings">
       <label class="settings-field" for="tm-percent">
         <span class="settings-label">Training Max</span>
         <span class="tm-input">
@@ -46,6 +41,8 @@
           <span class="tm-input-suffix">% of 1RM</span>
         </span>
       </label>
+
+      <h1 class="app-title">5/3/1 planner</h1>
 
       <div class="settings-week" role="radiogroup" aria-label="Current week">
         <span class="settings-label">Week</span>
@@ -66,7 +63,7 @@
           <span>4</span>
         </label>
       </div>
-    </div>
+    </header>
 
     <main id="cards" class="cards" aria-label="Exercises"></main>
 
