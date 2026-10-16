@@ -13,7 +13,7 @@ The load every 5/3/1 percentage is calculated from. Derived from the entered 1RM
 _Avoid_: 1RM, max, true max
 
 **Training Max percentage**:
-The fraction of the 1RM used as the Training Max, chosen globally as 90% or 85%.
+The fraction of the 1RM used as the Training Max, set globally by the lifter to any value from 1% to 100%.
 _Avoid_: TM %, max percentage
 
 **Exercise**:
