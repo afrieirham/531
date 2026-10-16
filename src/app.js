@@ -1,7 +1,7 @@
 import { buildCycle } from "./calc.js";
 
 const DEFAULT_LABELS = ["Bench", "OHP", "Deadlift", "Squat"];
-const DEFAULT_ONE_REP_MAXES = ["65", "45", "115", "104"];
+const DEFAULT_ONE_REP_MAXES = ["65", "45", "115", "105"];
 const DEFAULT_TM_PERCENT = 85;
 const TM_MIN = 1;
 const TM_MAX = 100;
